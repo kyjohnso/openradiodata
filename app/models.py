@@ -1,3 +1,4 @@
+import datetime
 from app import db, orm
 
 class Raw(db.Model):
@@ -5,7 +6,11 @@ class Raw(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     Manufacturer = db.Column(db.String(80))
     Model = db.Column(db.String(80))
-    UploadDateTime = db.Column(db.DateTime,index=True)
+    UploadDateTime = db.Column(
+        db.DateTime,
+        index=True, 
+        default=datetime.datetime.utcnow
+    )
     MeasurementDateTime = db.Column(db.DateTime, index=True)
     ElapsedRealtimeMillis = db.Column(db.Integer)
     TimeNanos = db.Column(db.BigInteger)
@@ -42,7 +47,11 @@ class Fix(db.Model):
     __tablename__ = 'fix'
     id = db.Column(db.Integer, primary_key=True)
     raws = orm.relationship("Raw")
-    UploadDateTime = db.Column(db.DateTime,index=True)
+    UploadDateTime = db.Column(
+        db.DateTime,
+        index=True, 
+        default=datetime.datetime.utcnow
+    )
     MeasurementDateTime = db.Column(db.DateTime, index=True)
     Provider = db.Column(db.String(80))
     Latitude = db.Column(db.Float,index=True)
