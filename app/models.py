@@ -1,7 +1,8 @@
 import datetime
 from app import db, orm
+from sqlalchemy_serializer import SerializerMixin
 
-class Raw(db.Model):
+class Raw(db.Model, SerializerMixin):
     __tablename__ = 'raw'
     id = db.Column(db.Integer, primary_key=True)
     Manufacturer = db.Column(db.String(80))
@@ -43,7 +44,7 @@ class Raw(db.Model):
     AgcDb = db.Column(db.Float)
     fix_id = db.Column(db.Integer, db.ForeignKey('fix.id'))
 
-class Fix(db.Model):
+class Fix(db.Model, SerializerMixin):
     __tablename__ = 'fix'
     id = db.Column(db.Integer, primary_key=True)
     raws = orm.relationship("Raw")
@@ -61,7 +62,11 @@ class Fix(db.Model):
     Accuracy = db.Column(db.Float)
     UTCTimeInMs = db.Column(db.BigInteger, index=True)
 
-class Test(db.Model):
+class Test(db.Model, SerializerMixin):
+    """
+    This is a really simple dummy model to test and make sure all of the 
+    serialization and post/get garbage is working
+    """
     __tablename__ = 'test'
     id = db.Column(db.Integer, primary_key=True)
     UploadDateTime = db.Column(
