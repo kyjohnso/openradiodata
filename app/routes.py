@@ -21,6 +21,7 @@ def raw():
                 db.session.add(raw_obj)
         else:
             raw_obj = Raw(**raw_json)
+            db.session.add(raw_obj)
         db.session.commit()
         return jsonify({"success": True}), 200, {"ContentType": "application/json"}
     elif request.method == "GET":
