@@ -2,15 +2,14 @@ import datetime
 from app import db, orm
 from sqlalchemy_serializer import SerializerMixin
 
+
 class Raw(db.Model, SerializerMixin):
-    __tablename__ = 'raw'
+    __tablename__ = "raw"
     id = db.Column(db.Integer, primary_key=True)
     Manufacturer = db.Column(db.String(80))
     Model = db.Column(db.String(80))
     UploadDateTime = db.Column(
-        db.DateTime,
-        index=True, 
-        default=datetime.datetime.utcnow
+        db.DateTime, index=True, default=datetime.datetime.utcnow
     )
     MeasurementDateTime = db.Column(db.DateTime, index=True)
     ElapsedRealtimeMillis = db.Column(db.Integer)
@@ -40,40 +39,39 @@ class Raw(db.Model, SerializerMixin):
     CarrierPhaseUncertainty = db.Column(db.Float)
     MultipathIndicator = db.Column(db.Float)
     SnrInDb = db.Column(db.Float)
-    ConstellationType = db.Column(db.SmallInteger,index=True) 
+    ConstellationType = db.Column(db.SmallInteger, index=True)
     AgcDb = db.Column(db.Float)
-    fix_id = db.Column(db.Integer, db.ForeignKey('fix.id'))
+    fix_id = db.Column(db.Integer, db.ForeignKey("fix.id"))
+    user_id = db.Column(db.String(80))
 
 class Fix(db.Model, SerializerMixin):
-    __tablename__ = 'fix'
+    __tablename__ = "fix"
     id = db.Column(db.Integer, primary_key=True)
     raws = orm.relationship("Raw")
     UploadDateTime = db.Column(
-        db.DateTime,
-        index=True, 
-        default=datetime.datetime.utcnow
+        db.DateTime, index=True, default=datetime.datetime.utcnow
     )
     MeasurementDateTime = db.Column(db.DateTime, index=True)
     Provider = db.Column(db.String(80))
-    Latitude = db.Column(db.Float,index=True)
-    Longitude = db.Column(db.Float,index=True)
+    Latitude = db.Column(db.Float, index=True)
+    Longitude = db.Column(db.Float, index=True)
     Altitude = db.Column(db.Float)
     Speed = db.Column(db.Float)
     Accuracy = db.Column(db.Float)
     UTCTimeInMs = db.Column(db.BigInteger, index=True)
+    user_id = db.Column(db.String(80))
+
 
 class Test(db.Model, SerializerMixin):
     """
-    This is a really simple dummy model to test and make sure all of the 
+    This is a really simple dummy model to test and make sure all of the
     serialization and post/get garbage is working
     """
-    __tablename__ = 'test'
+
+    __tablename__ = "test"
     id = db.Column(db.Integer, primary_key=True)
     UploadDateTime = db.Column(
-        db.DateTime,
-        index=True, 
-        default=datetime.datetime.utcnow
+        db.DateTime, index=True, default=datetime.datetime.utcnow
     )
     String = db.Column(db.String(80))
     Float = db.Column(db.Float)
-    
