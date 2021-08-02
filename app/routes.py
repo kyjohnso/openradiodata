@@ -9,4 +9,8 @@ def index():
 @app.route('/raw/', methods=['GET', 'POST'])
 def raw():
     return "no raw data"    
+
+
+@app.route('/api/test', methods=['GET', 'POST'])
+def api_test():
     

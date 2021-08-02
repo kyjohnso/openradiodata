@@ -60,3 +60,15 @@ class Fix(db.Model):
     Speed = db.Column(db.Float)
     Accuracy = db.Column(db.Float)
     UTCTimeInMs = db.Column(db.BigInteger, index=True)
+
+class Test(db.Model):
+    __tablename__ = 'test'
+    id = db.Column(db.Integer, primary_key=True)
+    UploadDateTime = db.Column(
+        db.DateTime,
+        index=True, 
+        default=datetime.datetime.utcnow
+    )
+    String = db.Column(db.String(80))
+    Float = db.Column(db.Float)
+    
